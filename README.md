@@ -5,6 +5,7 @@ After install MySQL, it requires grant access settings for root and users.
 <details>
 <summary>MySQL Environment setting note:</summary>
 In order to edit as root, login like:
+
 ```
 sudo mysql -u root -p
 Enter password:
