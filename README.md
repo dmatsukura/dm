@@ -1,5 +1,7 @@
 This repo is the DiceK's portfolio page
 
+Below is the partial note with some reference base instraction to create your development environment
+Assuming this envrionemnt is set as Ubuntu 22.04LTS over ssh to the Windows base Visual Studio Code
 
 Installation reference: [How To Install MySQL on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04/)
 
@@ -42,10 +44,10 @@ python -m pip install -r requirements.txt
 
 If ```mysqlclient==2.0.3``` gives error  saying "[Mysqlclient cannot install via pip, cannot find pkg-config name](https://stackoverflow.com/questions/76585758/mysqlclient-cannot-install-via-pip-cannot-find-pkg-config-name#:~:text=The%20error%20you%20are%20encountering,build%20the%20mysqlclient%20Python%20package.)", do below command
 ```
-sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+sudo apt install python3-dev default-libmysqlclient-dev build-essential
 ```
 
-If ```ldap``` returns error, [ERROR: Could not build wheels for python-ldap, which is required to install pyproject.toml-based projects](https://stackoverflow.com/questions/75736939/error-could-not-build-wheels-for-python-ldap-which-is-required-to-install-pypr), then do below
+If ```ldap``` returns error, [I can't install python-ldap](https://stackoverflow.com/questions/4768446/i-cant-install-python-ldap), then do below
 ```
 sudo apt-get install libsasl2-dev python3-dev libldap2-dev libssl-dev
 ```
@@ -55,3 +57,10 @@ Then do again
 python -m pip install -r requirements.txt
 ```
 should install all packages
+
+get git files from GitHub:
+Install Git on the linux environment 
+```
+sudo apt install 
+```
+
