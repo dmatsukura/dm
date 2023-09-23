@@ -26,6 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #SECRET_KEY = 'django-insecure-fsw(@h2^x5=rri^jj!59&w#^qsdj#=t8&)5%4-@x$mx$_aewqq'
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 DEBUG = bool(os.environ.get("DEBUG", default=0))
@@ -78,13 +79,33 @@ WSGI_APPLICATION = 'dm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+"""
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env("DATABASE_NAME"),
+        'USER': env("DATABASE_USER"),
+        'PASSWORD': env("DATABASE_PASSWORD"),
+        'HOST': env("DATABASE_HOST"),
+        'PORT': env("DATABASE_PORT")
+    }
+    'nc': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env("NC_DATABASE_NAME"),
+        'USER': env("NC_DATABASE_USER"),
+        'PASSWORD': env("NC_DATABASE_PASSWORD"),
+        'HOST': env("NC_DATABASE_HOST"),
+        'PORT': env("NC_DATABASE_PORT")
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
