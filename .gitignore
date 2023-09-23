@@ -1,0 +1,84 @@
+install-systemd.sh
+start.sh
+
+# ignore all auto-generated files
+*.pyc
+*~
+*.py#
+*.html#
+*.css#
+*.js#
+*.swp
+*.fuse_hidden*
+*.idea*
+.DS_Store
+._*
+.apdisk
+ghostdriver.log
+npm-debug.log
+.bash*
+.pip/pip.log
+.emacs
+.lesshst
+.mysql_history
+.viminfo
+TAGS
+*.log
+*.swo
+*.swn
+*.vs
+venv/*
+share/man
+.vscode
+lintlog.txt
+
+# SASS
+.sass-cache
+.sass-cache/
+
+# PROGRAM OUTPUT
+.temp*
+*.orig
+*.remote.*
+*.BASE.*
+*.REMOTE.*
+*.BACKUP.*
+*.LOCAL.*
+*.scssc
+
+# NODE WEBKIT DUMPS
+image_server/core
+
+# VARIOUS
+bin/*
+lib/*
+include/*
+local/*
+ambri_research/templates/static/img/
+emails/static/emails/analysis_qi_recipients.json
+emails/static/emails/analysis_msalConfig.json
+analysis/static/analysis/scheduleMsalConfig.json
+analysis/testQueries.py
+
+# APP
+CACHE
+staticfiles
+mediafiles
+plotly.log
+gems/
+Downloads/
+cache/
+
+# USELESS LEFTOVERS FROM PIP INSTALL IPYTHON - STILL NECESSARY?
+share/man/
+share/doc/
+
+# TEST DIRECTORIES, contain generated files
+.coverage
+htmlcov
+
+# DATABASE DUMPS
+/database-dump-*.backup
+dump.rdb
+
+.env
