@@ -59,6 +59,8 @@ python -m pip install -r requirements.txt
 should install all packages
 
 get git files from GitHub:
+Recomend read through [Using Git source control in VS Code](https://code.visualstudio.com/docs/sourcecontrol/overview)
+
 Install Git on the linux environment 
 ```
 sudo apt install 
