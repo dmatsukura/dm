@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-
+import environ
 from pathlib import Path
 
+#Initialize environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,14 +28,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-fsw(@h2^x5=rri^jj!59&w#^qsdj#=t8&)5%4-@x$mx$_aewqq'
 SECRET_KEY = os.environ.get("SECRET_KEY")
-
+print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = bool(os.environ.get("DEBUG", default=1))
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS 
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -43,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dm_portfolio',
+    'django_extensions', #Downloaded App from GitHub(git clone https://github.com/django-extensions/django-extensions.gits)
+
 ]
 
 MIDDLEWARE = [
@@ -79,17 +85,12 @@ WSGI_APPLICATION = 'dm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-"""
-
-DATABASES = {
-    'default': {
+    },
+    'mysql': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': env("DATABASE_NAME"),
         'USER': env("DATABASE_USER"),
@@ -97,6 +98,7 @@ DATABASES = {
         'HOST': env("DATABASE_HOST"),
         'PORT': env("DATABASE_PORT")
     }
+    ,
     'nc': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': env("NC_DATABASE_NAME"),
