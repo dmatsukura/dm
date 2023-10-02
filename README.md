@@ -201,6 +201,12 @@ And do migrate
 ```
 python manage.py migrate
 ```
-
 </detail >
 
+<detail>
+<summary>Apache mod-wsgi setting</sumamry>
+[Setting reference site](https://modwsgi.readthedocs.io/en/develop/user-guides/quick-installation-guide.html)
+
+
+
+</detail>
