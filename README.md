@@ -294,4 +294,19 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dm.settings') # NOTE - change '
 application = get_wsgi_application()
 ```
 
+And you should see this screen when you type your domain name on the browser
+
+
+
+Other trouble shooting or regular installation documentations sites are bewlow:
+[How to use Django with Apache and mod_wsgi¶](https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/modwsgi/)
+[How To Troubleshoot Common Apache Errors](https://www.digitalocean.com/community/tutorials/how-to-troubleshoot-common-apache-errors)
+[Apache Network Error AH00072: make_sock: could not bind to address](https://www.digitalocean.com/community/tutorials/apache-network-error-ah00072-make_sock-could-not-bind-to-address)
+[How To Configure the Apache Web Server on an Ubuntu or Debian VPS](https://www.digitalocean.com/community/tutorials/how-to-configure-the-apache-web-server-on-an-ubuntu-or-debian-vps)
+[How To Install the Apache Web Server on Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04)
+
+Deploy django application
+[Deploy Django 4 - Production Install](https://terokarvinen.com/2022/deploy-django/)
+
+
 </details>
