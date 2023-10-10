@@ -29,10 +29,7 @@ Connect to the remote server in different IP address
 ```
 mysql -u nextcloud -h 192.168.xxx.xxx -P 330x -p 
 ```
-### Optional - replication setting
-
-## Note
-# Note
+### Optional - replication setting note will be added later
 
 </details>
 
