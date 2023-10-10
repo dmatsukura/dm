@@ -205,7 +205,7 @@ python manage.py migrate
 
 <detail>
 <summary>Apache mod-wsgi setting</sumamry>
-[Setting reference site](https://modwsgi.readthedocs.io/en/develop/user-guides/quick-installation-guide.html)
+[mod_wsgi Quick Installation Guide](https://modwsgi.readthedocs.io/en/develop/user-guides/quick-installation-guide.html)
 
 
 
