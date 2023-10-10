@@ -209,21 +209,68 @@ python manage.py migrate
 
 
 
-Useful command references
+Useful command references for Apache2 and mod-wsgi
 ```
 ./configure --with-python=/home/administrator/dm_django/venv/bin/python3.10
-```
-
-```
 sudo systemctl restart apache2
 sudo apachectl restart
 sudo nano /etc/apache2/apache2.conf
 sudo nano /etc/apache2/sites-available/matsukura.conf
-```
-
-```
 sudo tail -n 2 /var/log/apache2/error.log
 sudo apachectl configtest
+```
+
+Quick Installation Guide for Apache2 and mod-wsgi
+https://modwsgi.readthedocs.io/en/develop/user-guides/quick-installation-guide.html
+
+Based on this instruction, I have installed mod-wsgi on my Ubuntu 22.04LTS environment and set up the Apache2 server to run Django project.
+
+Check the newest mod-wsgi version from [here](https://github.com/GrahamDumpleton/mod_wsgi/releases) 
+```
+wget https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/mod-wsgi_version.tar.gz
+tar xvfz mod-wsgi_version.tar.gz
+```
+
+After finish downloading, fllow direction and once you are done with ```make clean``` then go to the ```sudo nano /etc/apache2/sites-available/yourproject.conf``` file from command line (this case ```matsukura.conf``` ) and add below lines
+
+**Note: Below location is set under ```/home``` directory and this example case ```/home/administrator/dm_django/```**
+```
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+
+        #ServerAdmin webmaster@localhost
+        #DocumentRoot /var/www/html
+
+        ServerAdmin matsu.dicek@gmail.com # change this to your email address
+        ServerName matsukura.dev # change this to your domain name
+        ServerAlias www.matsukura.dev # change this to your domain alias name
+        DocumentRoot /home/administrator/dm_django 
+
+        WSGIDaemonProcess dm_django python-home=/home/administrator/dm_django/venv python-path=/home
+        WSGIProcessGroup dm_django
+
+        <Directory /home/administrator/dm_django/dm>
+                <Files wsgi.py>
+                        Require all granted
+                </Files>
+        </Directory>
+
+        WSGIScriptAlias / /home/administrator/dm_django/dm/wsgi.py
+
+        Alias /static /home/administrator/dm_django/static
+        <Directory /home/administrator/dm_django/static>
+                Require all granted
+        </Directory>
+
+</VirtualHost>
+
 ```
 
 Code snippet for wsgi.py file
@@ -245,7 +292,7 @@ from django.core.wsgi import get_wsgi_application
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dm.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dm.settings') # NOTE - change 'dm' to your project's main app name. This case project name is 'dm_django' and main app name is 'dm'
 
 application = get_wsgi_application()
 ```
