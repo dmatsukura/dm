@@ -201,30 +201,33 @@ And do migrate
 ```
 python manage.py migrate
 ```
-</detail >
+</details>
 
-<detail>
+<details>
 <summary>Apache mod-wsgi setting</sumamry>
 [mod_wsgi Quick Installation Guide](https://modwsgi.readthedocs.io/en/develop/user-guides/quick-installation-guide.html)
 
 
 
-Useful commands references
-
+Useful command references
+```
 ./configure --with-python=/home/administrator/dm_django/venv/bin/python3.10
+```
 
-
+```
 sudo systemctl restart apache2
 sudo apachectl restart
 sudo nano /etc/apache2/apache2.conf
 sudo nano /etc/apache2/sites-available/matsukura.conf
+```
 
+```
 sudo tail -n 2 /var/log/apache2/error.log
 sudo apachectl configtest
+```
 
 Code snippet for wsgi.py file
 ```
-'''
 """
 WSGI config for dm project.
 
@@ -245,9 +248,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../"
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dm.settings')
 
 application = get_wsgi_application()
+```
 
-'''
-
-
-
-</detail>
+</details>
