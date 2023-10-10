@@ -34,8 +34,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = bool(os.environ.get("DEBUG", default=1))
+DEBUG = True
+#DEBUG = bool(os.environ.get("DEBUG", default=1))
 
 #ALLOWED_HOSTS = []
 
@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dm_portfolio',
     'django_extensions', #Downloaded App from GitHub(git clone https://github.com/django-extensions/django-extensions.gits)
-
+    'dm',
 ]
 
 MIDDLEWARE = [
