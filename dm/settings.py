@@ -38,7 +38,11 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = bool(os.environ.get("DEBUG", default=1))
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = []
+
+#if PRODUCTION:
+#    ALLOWED_HOSTS = [os.uname()[1], "192.168.11.211"]
+#else:
+ALLOWED_HOSTS = ["192.168.11.211", "localhost", "*", "dm_django.localhost"]
 
 # Application definition
 
@@ -156,8 +160,8 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -170,7 +170,7 @@ Paste generated key into the SECRET_KEY section of .env file
 
 
 
-[Git Ignore FIle list sample from toptal.com](https://www.toptal.com/developers/gitignore/api/python)
+[Git Ignore file list sample from toptal.com](https://www.toptal.com/developers/gitignore/api/python)
 
 Abobe steps troubleshoot: If you are facing below error message
 ```
@@ -187,3 +187,26 @@ Try create first app (above state is just created project and cloned the 'django
 
 </details>
 
+<details>
+<summary>Django MySQL setting setting </summary>
+[Django official documentation](https://docs.djangoproject.com/en/4.2/intro/tutorial02/#database-setup)
+
+[How to Connect MySQL Database with Django Project](https://www.youtube.com/watch?v=SNyCV8vOr-g)
+
+Once setting is done do 
+```
+python manage.py makemigrations
+```
+And do migrate
+```
+python manage.py migrate
+```
+</detail >
+
+<detail>
+<summary>Apache mod-wsgi setting</sumamry>
+[mod_wsgi Quick Installation Guide](https://modwsgi.readthedocs.io/en/develop/user-guides/quick-installation-guide.html)
+
+
+
+</detail>

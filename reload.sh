@@ -3,7 +3,7 @@
 ./venv/bin/python3 manage.py check --deploy
 ./venv/bin/python3 manage.py collectstatic --noinput
 ./venv/bin/python3 manage.py migrate
-touch ambri_research/wsgi.py
+touch dm_django/wsgi.py
 
 if [[ $(/usr/bin/id -u) -ne 0 ]]; then
     exit
