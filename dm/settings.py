@@ -34,15 +34,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 #DEBUG = bool(os.environ.get("DEBUG", default=1))
+
+if PRODUCTION:
+    DEBUG = False
+else:
+    DEBUG = True
 
 #ALLOWED_HOSTS = []
 
 #if PRODUCTION:
 #    ALLOWED_HOSTS = [os.uname()[1], "192.168.11.211"]
 #else:
-ALLOWED_HOSTS = ["192.168.11.211", "localhost", "*", "dm_django.localhost"]
+#ALLOWED_HOSTS = ["192.168.11.211", "localhost", "*", "dm_django.localhost"]
+
+if PRODUCTION:
+    ALLOWED_HOSTS = ["matsukura.dev", "192.168.11.211"]
+else:
+    ALLOWED_HOSTS = [os.uname()[1],"192.168.11.211", "localhost", "*", "dm_django.localhost"]
 
 # Application definition
 
@@ -53,8 +63,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dm_portfolio',
     'django_extensions', #Downloaded App from GitHub(git clone https://github.com/django-extensions/django-extensions.gits)
+    'django_celery_beat',
+    'django_celery_results',
+    'dm_portfolio',
     'dm',
     'private_storage',
 ]
