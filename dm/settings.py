@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'dm_portfolio',
     'django_extensions', #Downloaded App from GitHub(git clone https://github.com/django-extensions/django-extensions.gits)
     'dm',
+    'private_storage',
 ]
 
 MIDDLEWARE = [
@@ -159,11 +160,74 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+#
+#STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
+if PRODUCTION:
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/production_static"
+else:
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/dev_static/"
+STATIC_URL = "/static/"
+
+MEDIA_ROOT = "/home/dm_nc_sync/dm_django_media/img/"
+MEDIA_URL = "img/"
+
+PRIVATE_STORAGE_ROOT = MEDIA_ROOT
+PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_authenticated'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Logging
+LOGGING_DIR = '/home/administrator/dm_nc_sync/dm_django_log/log'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        }
+    },
+    'handlers': {
+        'default': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'simple',
+            'filename': os.path.join(LOGGING_DIR, 'django.log'),
+            'maxBytes': 1024 * 1024 * 5,  # 5MB
+            'backupCount': 10,
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': False,
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['default', 'mail_admins', 'console'],
+            'level': 'INFO',
+        },
+        'django': {
+            'handlers': ['default'],
+            'level': 'INFO',
+            "propagate": True,
+        },
+        'django.db.backends': {
+            'level': 'WARNING',
+        },
+        'asyncio': {  # Stop obnoxious EpollSelector log messages
+            'level': 'WARNING',
+        }
+    }
+}
