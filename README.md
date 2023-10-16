@@ -273,7 +273,7 @@ After finish downloading, fllow direction and once you are done with ```make cle
 Code snippet for wsgi.py file
 ```
 """
-WSGI config for dm project.
+WSGI config for dm_django project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -289,7 +289,7 @@ from django.core.wsgi import get_wsgi_application
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dm.settings') # NOTE - change 'dm' to your project's main app name. This case project name is 'dm_django' and main app name is 'dm'
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dm_django.settings') # NOTE - change 'dm' to your project's main app name. This case project name is 'dm_django' and main app name is 'dm'
 
 application = get_wsgi_application()
 ```
@@ -307,6 +307,106 @@ Other trouble shooting or regular installation documentations sites are bewlow:
 
 Deploy django application
 [Deploy Django 4 - Production Install](https://terokarvinen.com/2022/deploy-django/)
+
+
+</details>
+
+
+<details>
+<summary>Apache mod-wsgi trouble shooting</sumamry>
+
+Often mod-wsgi gets permission issue.
+If you see below error message, do below command
+```
+---Error message on the browser---
+Forbidden
+You don't have permission to access this resource.
+
+Apache/2.4.52 (Ubuntu) Server at 192.168.11.211 Port 80
+```
+
+```
+sudo chown -R www-data:www-data /home/administrator/dm_django
+
+```
+
+To check the log file, do below command
+```
+cat /var/log/apache2/error.log
+```
+
+</details>
+
+
+<details>
+<summary>Renaming Django App name</sumamry>
+References:
+[How to Rename a Django App](https://djangotricks.blogspot.com/2022/10/how-to-rename-a-django-app.html)
+[How to change the name of a Django app?](https://stackoverflow.com/questions/8408046/how-to-change-the-name-of-a-django-app)
+
+List of changing the app name are
+1. Make sure you have latest git pull and execute all of the database migration
+2. Install django-rename-app
+```
+(venv)$ pip install django-rename-app
+```
+Put the app into INSTALLED_APPS in your settings:
+```
+INSTALLED_APPS = [
+    # …
+    "django_rename_app",
+]
+```
+3. Rename the app directory
+4. Rename the app name in the settings.py, views.py, urls.py, manage.py files include the comments
+Note: in the global seach just do " dm" or "dm." to find all the app name might be easier
+5. If you have database to change the app name, do below command
+```
+#App name is changed from dm to dm_django which is the project name
+
+UPDATE django_content_type SET app_label='dm_django' WHERE app_label='dm';
+
+ALTER TABLE dm_modelName RENAME TO dm_django_modelName;
+
+#(For Django >= 1.7)
+UPDATE django_migrations SET app='dm_django' WHERE app='dm';
+```
+
+6. If you use Apache mod-wsgi, change the wsgi.py , asgi.py and /etc/apache2/sites-available/matsukura.conf file
+```
+1. <Directory /home/administrator/dm_django/dm> -> <Directory /home/administrator/dm_django/dm_django>
+2. WSGIScriptAlias / /home/administrator/dm_django/dm_django/wsgi.py
+```
+
+</details>
+
+<details>
+<summary>Note for the static configurations</sumamry>
+
+In the ```settings.py``` file, set the static directory path
+```
+if PRODUCTION:
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/production_static"
+else:
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/dev_static/"
+STATIC_URL = "/static/"
+``` 
+
+
+In the ```/etc/apache2/sites-available/matsukura.conf``` file set proper environment directory setting based on the environment
+```
+        # Production
+        # Alias /static /home /administrator/dm_nc_sync/dm_django_static/production_static
+        # Development
+        Alias /static /home/administrator/dm_nc_sync/dm_django_static/dev_static 
+        
+        # Production
+        # <Directory /home/administrator/dm_nc_sync/dm_django_static/production_static>
+        # Development
+        <Directory /home/administrator/dm_nc_sync/dm_django_static/dev_static>
+                Require all granted
+        </Directory>
+```
 
 
 </details>
