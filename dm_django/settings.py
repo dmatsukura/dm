@@ -66,10 +66,11 @@ INSTALLED_APPS = [
     'django_extensions', #Downloaded App from GitHub(git clone https://github.com/django-extensions/django-extensions.gits)
     'django_celery_beat',
     'django_celery_results',
-    'dm_portfolio',
     'dm_django',
     'private_storage',
     'django_rename_app',
+    'dm_portfolio', 
+    'ckeditor', #
 ]
 
 MIDDLEWARE = [
@@ -95,6 +96,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'dm_portfolio.context_processors.project_context'
             ],
             'debug': DEBUG,
         }

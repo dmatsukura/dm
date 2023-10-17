@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views #import views from current directory
+
+
+app_name = 'dm_django'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.IndexView.as_view(), name='portfolio'),
 ]
