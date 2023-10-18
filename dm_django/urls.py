@@ -15,13 +15,41 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from . import views #import views from current directory
-
-
-app_name = 'dm_django'
+from django.urls import path, include, re_path #url() is deplicated in Django 3.0. See details https://stackoverflow.com/questions/70319606/importerror-cannot-import-name-url-from-django-conf-urls-after-upgrading-to
+from dm_django import settings
+from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
+from django.views.static import serve 
+from django.views.generic import TemplateView
+from dm_django import main_views
 
 urlpatterns = [
+
+    #robots.txt path section
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
+
+    #admin path section
     path('admin/', admin.site.urls),
-    path('', views.IndexView.as_view(), name='portfolio'),
-]
+
+    #app path section
+    path('', include('dm_portfolio.urls', namespace="dm_portfolio")),
+
+    re_path(r'^media/(?P<path>.*)$', serve,
+        {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve,
+        {'document_root': settings.STATIC_ROOT}),
+
+    #dm_jango path section
+    path('', main_views.MainView.as_view(), name="home"),
+	path('contact/', main_views.ContactView.as_view(), name="contact"),
+    path('blog/', main_views.BlogView.as_view(), name="blogs"),
+	path('blog/<slug:slug>', main_views.BlogDetailView.as_view(), name="blog"),
+]   
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

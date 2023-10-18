@@ -410,3 +410,100 @@ In the ```/etc/apache2/sites-available/matsukura.conf``` file set proper environ
 
 
 </details>
+
+<details>
+<summary>Quick tip: ```requirements.txt``` generating from current venv environment </summary>
+
+Caution: Make sure you are in the venv environment
+ 
+```pip freeze > requirements.txt```
+
+NOTE: other option is ```pip install pipreqs``` and then ```pipreqs /path/to/project``` but this does not export all pip packages to requirements.txt file
+
+[Automatically create file 'requirements.txt'](https://stackoverflow.com/questions/31684375/automatically-create-file-requirements-txt)
+
+</details>
+
+
+<details>
+<summary>Quick tip: copy all contents of a directory command</summary>
+
+```
+cp -a /source/directory/. /destination/directory/
+```
+
+[How can I copy the contents of a folder to another folder in a different directory using terminal?])(https://askubuntu.com/questions/86822/how-can-i-copy-the-contents-of-a-folder-to-another-folder-in-a-different-directo)
+
+<details>
+
+
+<details>
+<summary>Quick tip: rSync to mirror project folder to other folder</summary>
+Copy all files to the destination directory making that source directory as a subdirectory of the destination directory
+
+```
+rsync --stats --progress -av /source/directory /destination/directory/
+```
+The source ```directory``` will be just droped off under the destination ```directory``````
+
+</details>
+
+<details>
+<summary>Quick tip: Zipping file on linux</summary>
+Note: In order to be able to unzip the file on Windows, Mac or other OS used .zip instead of tar.gz
+
+Install zip and unzip command
+```
+sudo apt-get install zip unzip
+```
+
+To zip the file, do below command
+```
+zip -r ZipFileName.zip /source/directory/to/zip
+```
+(How can I create a zip archive of a whole directory)[https://askubuntu.com/questions/58889/how-can-i-create-a-zip-archive-of-a-whole-directory-via-terminal-without-hidden]
+
+
+To unzip the file, do below command
+```
+unzip ZipFileName.zip
+```
+(How to unzip a zip file from the Terminal?)[https://askubuntu.com/questions/86849/how-to-unzip-a-zip-file-from-the-terminal]
+
+Note: As you notice when unzip file, it will be unzipped with the same directory structure as the source directory. So above case ```ZipFileName.zip``` will be unzipped as ```/source/directory/to/zip``` directory.
+</details>
+
+
+<details>
+<summary>Quick Tip: Delete command for whole directory including hidden files and subdirectories</summary>
+To delete all files and subdirectories including hidden files and subdirectories, do below command
+```
+```
+rm -rf /path/to/directory
+```
+(How to remove all files from a directory?)[https://askubuntu.com/questions/60228/how-to-remove-all-files-from-a-directory]
+</details>
+
+<details>
+<summary>Prevent bot access using robots.txt and robots meta tag</summary>
+
+(How to add a robots.txt to your Django site)[https://adamj.eu/tech/2020/02/10/robots-txt/]
+
+Robots.txt general information
+(robots.txt - Wikipedia)[https://en.wikipedia.org/wiki/Robots.txt]
+(Introduction to robots.txt)[https://developers.google.com/search/docs/crawling-indexing/robots/intro]
+(How Google interprets the robots.txt specification)[https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt]
+(A Deeper Look At Robots.txt)[https://searchengineland.com/a-deeper-look-at-robotstxt-17573]
+(Block the Bots that Feed “AI” Models by Scraping Your Website)[https://neil-clarke.com/block-the-bots-that-feed-ai-models-by-scraping-your-website/]
+
+Robots.txt template
+(Robots.txt Template from ditig.com)[https://www.ditig.com/robots-txt-template]
+(Robots.txt Template from  apache-ultimate-bad-bot-blocker on the GitHub)[https://github.com/mitchellkrogza/apache-ultimate-bad-bot-blocker/blob/master/robots.txt/robots.txt]
+
+Organization example
+(GitHub robots.txt)[https://github.com/robots.txt]
+(Google robots.txt)[https://www.google.com/robots.txt]
+(Amazon robots.txt)[https://www.amazon.com/robots.txt]
+
+
+</details>

@@ -1,24 +1,12 @@
 """dm_portfolio app URL Configuration
-
 """
+from django.urls import path
+from dm_portfolio import dm_portfolio
 
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-from django.views.static import serve #for media files
-from django.conf.urls import url
-
+app_name = "dm_portfolio"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('dm_portfolio.urls', namespace='portfolio')),
-    url(r'^media/(?P<path>.*)$', serve, 
-        {'document_root': settings.MEDIA_ROOT}),
-    url(r'^static/(?P<path>.*)$', serve, 
-        {'document_root': settings.STATIC_ROOT}),
-]
+	path('portfolio/', dm_portfolio.PortfolioView.as_view, name="portfolios"),
+	path('portfolio/<slug:slug>', dm_portfolio.PortfolioDetailView.as_view(), name="portfolio"),
+	]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
