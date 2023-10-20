@@ -19,7 +19,7 @@ from pathlib import Path
 env = environ.Env()
 environ.Env.read_env()
 
-PRODUCTION = (env("PRODUCTION") == '1')
+PRODUCTION = (env("PRODUCTION") == '1') #1 is dev and 0 is production
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -179,13 +179,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 #
 #STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
+
 
 if PRODUCTION:
-    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/production_static"
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/production_static/static"
 else:
-    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/dev_static/"
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/dev_static/static"
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = "/home/dm_nc_sync/dm_django_media/img/"
 MEDIA_URL = "img/"
