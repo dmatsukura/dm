@@ -55,6 +55,7 @@ lib/*
 include/*
 local/*
 static/*
+media/*
 dm_django/static/dm_django/images/
 dm_django/static/dm_django/js/
 dm_django/static/dm_django/css/
