@@ -55,10 +55,11 @@ lib/*
 include/*
 local/*
 static/*
+static/js/*
 media/*
-dm_django/static/dm_django/images/
-dm_django/static/dm_django/js/
-dm_django/static/dm_django/css/
+dm_django/static/dm_django/images/*
+dm_django/static/dm_django/js/*
+dm_django/static/dm_django/css/*
 
 
 # APP
