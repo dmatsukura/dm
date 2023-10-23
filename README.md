@@ -507,3 +507,21 @@ Organization example
 
 
 </details>
+
+<details>
+<summary>Apache static and media setting</summary>
+
+Static setting on the ```/etc/apache2/apache2.conf``` file
+```
+Alias /static/ /static/diretory/static/
+<Directory /static/diretory/static/>
+	Require all granted
+</Directory>
+```
+
+Media seting on the same file as above
+```
+
+```
+
+</details>
