@@ -70,7 +70,11 @@ INSTALLED_APPS = [
     'private_storage',
     'django_rename_app',
     'dm_portfolio', 
-    'ckeditor', #
+    'ckeditor', 
+    'rest_framework',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'dm_django.urls'

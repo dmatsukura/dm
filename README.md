@@ -525,3 +525,15 @@ Media seting on the same file as above
 ```
 
 </details>
+
+
+<details>
+<summary>TOTP Setting</summary>
+
+
+Reference: [Django : Two Factor Authentication](https://medium.com/@ksarthak4ever/django-two-factor-authentication-2ece42748610)
+
+
+
+
+</details>

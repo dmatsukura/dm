@@ -23,6 +23,7 @@ from django.views.static import serve
 from django.views.generic import TemplateView
 from dm_django import main_views
 
+
 urlpatterns = [
 
     #robots.txt path section
@@ -41,12 +42,16 @@ urlpatterns = [
         {'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve,
         {'document_root': settings.STATIC_ROOT}),
+    #account app path section
+    re_path(r'^api/', include('accounts.urls')),
 
     #dm_jango path section
     path('', main_views.MainView.as_view(), name="home"),
 	path('contact/', main_views.ContactView.as_view(), name="contact"),
     path('blog/', main_views.BlogView.as_view(), name="blogs"),
 	path('blog/<slug:slug>', main_views.BlogDetailView.as_view(), name="blog"),
+
+
 ]   
 
 if settings.DEBUG:
