@@ -13,13 +13,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 import environ
 from pathlib import Path
-from decouple import config
+
 
 #Initialize environment variables
 env = environ.Env()
 environ.Env.read_env()
 
-PRODUCTION = (env("PRODUCTION") == '1')
+PRODUCTION = (env("PRODUCTION") == '1') #1 is dev and 0 is production
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -66,10 +66,15 @@ INSTALLED_APPS = [
     'django_extensions', #Downloaded App from GitHub(git clone https://github.com/django-extensions/django-extensions.gits)
     'django_celery_beat',
     'django_celery_results',
-    'dm_portfolio',
     'dm_django',
     'private_storage',
     'django_rename_app',
+    'dm_portfolio', 
+    'ckeditor', 
+    'rest_framework',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -80,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'dm_django.urls'
@@ -95,6 +101,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'dm_portfolio.context_processors.project_context'
             ],
             'debug': DEBUG,
         }
@@ -164,6 +171,7 @@ USE_TZ = True
 if PRODUCTION:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 else:
+    # Don't send to production emails receivers in development
     EMAIL_BACKEND = "django.core.email.backends.dummy.EmailBackend"
 
 EMAIL_HOST = "smtp.gmail.com"
@@ -176,13 +184,14 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 #
 #STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
+
 
 if PRODUCTION:
-    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/production_static"
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/production_static/static"
 else:
-    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/dev_static/"
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/dev_static/static"
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = "/home/dm_nc_sync/dm_django_media/img/"
 MEDIA_URL = "img/"

@@ -54,11 +54,13 @@ bin/*
 lib/*
 include/*
 local/*
-ambri_research/templates/static/img/
-emails/static/emails/analysis_qi_recipients.json
-emails/static/emails/analysis_msalConfig.json
-analysis/static/analysis/scheduleMsalConfig.json
-analysis/testQueries.py
+static/*
+static/js/*
+media/*
+dm_django/static/dm_django/images/*
+dm_django/static/dm_django/js/*
+dm_django/static/dm_django/css/*
+
 
 # APP
 CACHE
