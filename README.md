@@ -579,7 +579,7 @@ Client side ```/etc/wireguard/wg0.conf``` file setting
 PrivateKey = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ## Client IP address ##
-Address = 10.0.1.10/24
+Address = 12.12.15.10/24
 
 [Peer]
 ## GCP haub20-template-3 server public key ##
