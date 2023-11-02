@@ -537,3 +537,64 @@ Reference: [Django : Two Factor Authentication](https://medium.com/@ksarthak4eve
 
 
 </details>
+
+
+
+<details>
+<summary>WireGuard Setting to publish your local production via Google Cloud Platform (GCP) VM</summary>
+
+
+Generate public key and private key on the GCP VPN server side
+Move directory to ```/etc/wireguard/keys``` if you don't have this directory, create ```sudo mkdir -m 0700 /etc/wireguard/keys```
+
+Generate private key
+```
+umask 077; wg genkey | tee /etc/wireguard/keys/private_server.key | wg /etc/wireguard/keys/public_server.key.pub > publickey
+```
+To see the result of keys do below command
+```
+cat /etc/wireguard/keys/private_server.key
+cat /etc/wireguard/keys/public_server.key.pub
+```
+
+
+On the GCP VPN server, before apply above generated keys to the wg0.conf file, make sure to take down the wg0 interface. Otherwise if you have a some setting already it keeps overwriting to the original setting
+```
+sudo systemctl stop wg-quick@wg0
+```
+
+
+Server side ```/etc/wireguard/wg0.conf``` file setting on GCP instance
+```
+[Peer]
+PublicKey = SERVER_PUBLIC_KEY
+AllowedIPs = 10.12.15.10/32
+Endpoint = 12.34.56.78:12345 
+```
+
+Client side ```/etc/wireguard/wg0.conf``` file setting
+```                         
+[Interface]
+## This Ubuntu client's private key ##
+PrivateKey = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+## Client IP address ##
+Address = 10.0.1.10/24
+
+[Peer]
+## GCP haub20-template-3 server public key ##
+PublicKey = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+AllowedIPs = 0.0.0.0/0
+Endpoint = 12.34.56.78:12345
+
+```
+
+</details>
+
+
+<details>
+<summary>Reverse Proxy setting using Nginx</summary>
+
+
+
+</details>
