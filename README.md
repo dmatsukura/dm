@@ -1,7 +1,12 @@
 # This repo is the DiceK's portfolio page
 
 Below is the partial note with some reference base instruction to create your development environment.
-Assuming this environment is set as Ubuntu 22.04LTS over SSH to the Windows base Visual Studio Code
+Assuming development and production environment is set as Ubuntu 22.04 LTS over SSH to the Windows base Visual Studio Code
+Public facing remote server is Ubuntu 20.04.6 LTS on the Google Cloud Platform (GCP) VM instance
+
+Overall configuration diagram
+----------------
+
 
 Installation reference: [How To Install MySQL on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04/)
 
@@ -412,7 +417,7 @@ In the ```/etc/apache2/sites-available/matsukura.conf``` file set proper environ
 </details>
 
 <details>
-<summary>Quick tip: ```requirements.txt``` generating from current venv environment </summary>
+<summary>Quick tip: requirements.txt generating from current venv environment </summary>
 
 Caution: Make sure you are in the venv environment
  
@@ -433,8 +438,6 @@ cp -a /source/directory/. /destination/directory/
 ```
 
 [How can I copy the contents of a folder to another folder in a different directory using terminal?])(https://askubuntu.com/questions/86822/how-can-i-copy-the-contents-of-a-folder-to-another-folder-in-a-different-directo)
-
-<details>
 
 
 <details>
@@ -594,6 +597,151 @@ Endpoint = 12.34.56.78:12345
 
 <details>
 <summary>Reverse Proxy setting using Nginx</summary>
+
+[Configuring an Nginx HTTPs Reverse Proxy on Ubuntu Bionic](https://www.scaleway.com/en/docs/tutorials/nginx-reverse-proxy/)
+
+```
+/etc/nginx/sites-available/[reverseproxy].conf
+```
+
+reverseproxy.conf file setting
+
+```
+server {
+        server_name [gcp-server-public-ip];
+
+        listen 80;
+        listen [::]:80;
+        access_log /var/log/nginx/reverse-access.log;
+        error_log /var/log/nginx/reverse-error.log;
+
+        location /{
+                proxy_pass http://[vpn_client_ip_address]:80/;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real_IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+                proxy_http_version 1.1;
+                proxy_set_header Connection "";
+                proxy_buffering off;
+                client_max_body_size 0;
+                proxy_read_timeout 36000s;
+                proxy_redirect off;
+        }
+}
+
+server { 
+        server_name [your_url].com www.[your_url].com;
+
+        location / { 
+                proxy_pass http://[gcp-server-public-ip]:[port-number]/;
+        }
+
+}
+
+```
+Test the setting running ```sudo nginx -t```
+
+
+Trouble shooting
+If you see the error message ```"/var/log/nginx/error.log" failed (13: Permission denied```, do below command
+[How to dismiss nginx warning message nginx: [alert] could not open error log file: open() "/var/log/nginx/error.log" failed (13: Permission denied)](https://serverfault.com/questions/967132/how-to-dismiss-nginx-warning-message-nginx-alert-could-not-open-error-log-fil)
+```
+sudo chown -R www-data:www-data /var/log/nginx
+
+Remove the folder of nginx log file and create new one
+sudo rm -rf /var/log/nginx
+sudo mkdir /var/log/nginx
+sudo touch /var/log/nginx/error.log
+sudo chown -R www-data:www-data /var/log/nginx
+
+```
+
+Certbot installation 
+
+certbot --nginx -d [your_url].com -v
+
+
+Troubleshooting
+When you see below error messge,
+```
+...
+Original exception was:
+Traceback (most recent call last):
+  File "/usr/bin/pip3", line 11, in <module>
+    load_entry_point('pip==20.0.2', 'console_scripts', 'pip3')()
+  File "/usr/lib/python3/dist-packages/pkg_resources/__init__.py", line 490, in load_entry_point
+    return get_distribution(dist).load_entry_point(group, name)
+  File "/usr/lib/python3/dist-packages/pkg_resources/__init__.py", line 2854, in load_entry_point
+    return ep.load()
+  File "/usr/lib/python3/dist-packages/pkg_resources/__init__.py", line 2445, in load
+    return self.resolve()
+  File "/usr/lib/python3/dist-packages/pkg_resources/__init__.py", line 2451, in resolve
+    module = __import__(self.module_name, fromlist=['__name__'], level=0)
+  File "/usr/lib/python3/dist-packages/pip/_internal/cli/main.py", line 10, in <module>
+    from pip._internal.cli.autocompletion import autocomplete
+  File "/usr/lib/python3/dist-packages/pip/_internal/cli/autocompletion.py", line 9, in <module>
+    from pip._internal.cli.main_parser import create_main_parser
+  File "/usr/lib/python3/dist-packages/pip/_internal/cli/main_parser.py", line 7, in <module>
+    from pip._internal.cli import cmdoptions
+  File "/usr/lib/python3/dist-packages/pip/_internal/cli/cmdoptions.py", line 24, in <module>
+    from pip._internal.exceptions import CommandError
+  File "/usr/lib/python3/dist-packages/pip/_internal/exceptions.py", line 10, in <module>
+    from pip._vendor.six import iteritems
+  File "/usr/lib/python3/dist-packages/pip/_vendor/__init__.py", line 65, in <module>
+    vendored("cachecontrol")
+  File "/usr/lib/python3/dist-packages/pip/_vendor/__init__.py", line 36, in vendored
+    __import__(modulename, globals(), locals(), level=0)
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 655, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 618, in _load_backward_compatible
+  File "<frozen zipimport>", line 259, in load_module
+  File "/usr/share/python-wheels/CacheControl-0.12.6-py2.py3-none-any.whl/cachecontrol/__init__.py", line 9, in <module>
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 655, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 618, in _load_backward_compatible
+  File "<frozen zipimport>", line 259, in load_module
+  File "/usr/share/python-wheels/CacheControl-0.12.6-py2.py3-none-any.whl/cachecontrol/wrapper.py", line 1, in <module>
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 655, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 618, in _load_backward_compatible
+  File "<frozen zipimport>", line 259, in load_module
+  File "/usr/share/python-wheels/CacheControl-0.12.6-py2.py3-none-any.whl/cachecontrol/adapter.py", line 5, in <module>
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 655, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 618, in _load_backward_compatible
+  File "<frozen zipimport>", line 259, in load_module
+  File "/usr/share/python-wheels/requests-2.22.0-py2.py3-none-any.whl/requests/__init__.py", line 95, in <module>
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 655, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 618, in _load_backward_compatible
+  File "<frozen zipimport>", line 259, in load_module
+  File "/usr/share/python-wheels/urllib3-1.25.8-py2.py3-none-any.whl/urllib3/contrib/pyopenssl.py", line 46, in <module>
+  File "/usr/lib/python3/dist-packages/OpenSSL/__init__.py", line 8, in <module>
+    from OpenSSL import crypto, SSL
+  File "/usr/lib/python3/dist-packages/OpenSSL/crypto.py", line 1553, in <module>
+    class X509StoreFlags(object):
+  File "/usr/lib/python3/dist-packages/OpenSSL/crypto.py", line 1573, in X509StoreFlags
+    CB_ISSUER_CHECK = _lib.X509_V_FLAG_CB_ISSUER_CHECK
+AttributeError: module 'lib' has no attribute 'X509_V_FLAG_CB_ISSUER_CHECK'
+```
+
+Try below command
+[AttributeError: module 'lib' has no attribute 'X509_V_FLAG_CB_ISSUER_CHECK'](https://stackoverflow.com/questions/73830524/attributeerror-module-lib-has-no-attribute-x509-v-flag-cb-issuer-check)
+```
+sudo apt remove python3-pip 
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python3 get-pip.py
+```
+reboot VM and try below command 
+```
+pip install pyopenssl --upgrade
+```
 
 
 

@@ -183,21 +183,23 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 #
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 #STATIC_URL = '/static/'
 
 
 if PRODUCTION:
-    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/production_static/static"
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/production_static/static/"
+
 else:
-    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/dev_static/static"
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/dev_static/static/"
+STATIC_URL = "/static/static/"
+
 
 MEDIA_ROOT = "/home/dm_nc_sync/dm_django_media/img/"
-MEDIA_URL = "img/"
+MEDIA_URL = "img/img/"
 
-PRIVATE_STORAGE_ROOT = MEDIA_ROOT
-PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_authenticated'
+#PRIVATE_STORAGE_ROOT = MEDIA_ROOT
+#PRIVATE_STORAGE_AUTH_FUNCTION = 'private_storage.permissions.allow_authenticated'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
