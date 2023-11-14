@@ -44,15 +44,10 @@ else:
 
 #ALLOWED_HOSTS = []
 
-#if PRODUCTION:
-#    ALLOWED_HOSTS = [os.uname()[1], "192.168.11.211"]
-#else:
-#ALLOWED_HOSTS = ["192.168.11.211", "localhost", "*", "dm_django.localhost"]
-
 if PRODUCTION:
-    ALLOWED_HOSTS = ["matsukura.dev", "192.168.11.211"]
+    ALLOWED_HOSTS = list(env('PROD_HOSTS'))
 else:
-    ALLOWED_HOSTS = [os.uname()[1],"192.168.11.211", "localhost", "*", "dm_django.localhost"]
+    ALLOWED_HOSTS = list(env('DEV_HOSTS')) #[os.uname()[1],"192.168.11.211", "localhost", "*", "dm_django.localhost"]
 
 # Application definition
 
@@ -188,14 +183,17 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
 
 if PRODUCTION:
-    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/production_static/static/"
+    STATIC_ROOT = env('PROD_STATIC') 
 
 else:
-    STATIC_ROOT = "/home/administrator/dm_nc_sync/dm_django_static/dev_static/static/"
+    STATIC_ROOT = env('DEV_STATIC') #"/home/administrator/dm_nc_sync/dm_django_static/dev_static/static/"
 STATIC_URL = "/static/static/"
 
 
-MEDIA_ROOT = "/home/dm_nc_sync/dm_django_media/img/"
+if PRODUCTION:
+    MEDIA_ROOT = env('PROD_IMG')
+else: 
+    MEDIA_ROOT = env('DEV_IMG') #"/home/dm_nc_sync/dm_django_media/dev_img/"
 MEDIA_URL = "img/img/"
 
 #PRIVATE_STORAGE_ROOT = MEDIA_ROOT
@@ -208,7 +206,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Logging
-LOGGING_DIR = '/home/administrator/dm_nc_sync/dm_django_log/log'
+if PRODUCTION:
+    LOGGING_DIR = env('PROD_LOG') 
+else:
+    LOGGING_DIR = env('DEV_LOG') #'/home/administrator/dm_nc_sync/dm_django_log/dev_log'
 
 
 LOGGING = {
