@@ -592,6 +592,13 @@ Endpoint = 12.34.56.78:12345
 
 ```
 
+Trouble shooting
+If you faced kicked out from remote SSH from host computer to prod computer, do below command
+```
+AllowedIPs = 0.0.0.0/0,::/0
+```
+Now you will be able to connect ssh with the VPN connection
+
 </details>
 
 
@@ -601,7 +608,8 @@ Endpoint = 12.34.56.78:12345
 [Configuring an Nginx HTTPs Reverse Proxy on Ubuntu Bionic](https://www.scaleway.com/en/docs/tutorials/nginx-reverse-proxy/)
 
 ```
-/etc/nginx/sites-available/[reverseproxy].conf
+cd /etc/nginx/sites-available
+sudo nano [reverseproxy].conf
 ```
 
 reverseproxy.conf file setting
@@ -641,6 +649,27 @@ server {
 
 ```
 Test the setting running ```sudo nginx -t```
+
+Restart nginx ```sudo systemctl restart nginx```
+
+Correct certbot command location and version to check
+```
+which certbot
+/opt/certbot/bin/certbot
+sudo /usr/bin/certbot --version
+certbot 2.7.4
+```
+
+
+Make certbot setting
+```
+sudo /usr/bin/certbot -nginx -d [your-domain].com -d www.[your-domain].com
+```
+NOTE:
+![www also needs to added in the A record of domain setting](https://i.stack.imgur.com/Da39Y.png) [reference](https://i.stack.imgur.com/Da39Y.png)```
+
+After that ```/etc/nginx/sites-available/[your-domain].com``` file will be updated as below with certbot setting
+
 
 
 Trouble shooting
